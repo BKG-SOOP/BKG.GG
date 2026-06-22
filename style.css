@@ -47,7 +47,7 @@ button, select, input { font: inherit; }
 button { cursor: pointer; }
 
 .app-shell {
-  width: min(1500px, calc(100% - 48px));
+  width: min(1620px, calc(100% - 48px));
   margin: 0 auto;
   padding: 28px 0 44px;
 }
@@ -352,13 +352,14 @@ button { cursor: pointer; }
   font-weight: 900;
 }
 .recent-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 7px;
   margin-top: 16px;
 }
 .result-badge {
-  width: 34px;
+  width: 100%;
+  min-width: 0;
   height: 34px;
   border-radius: 10px;
   display: grid;
