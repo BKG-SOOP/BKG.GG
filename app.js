@@ -32,6 +32,7 @@ const PLAYERS_PATH = `${ROOT_PATH}/players`;
 const MEMBER_ARCHIVE_PATH = `${ROOT_PATH}/memberArchive`;
 const MONTHLY_MATCHES_PATH = `${ROOT_PATH}/monthlyMatches`;
 const MONTHLY_STATS_PATH = `${ROOT_PATH}/monthlyStats`;
+const MANUAL_ADJUSTMENTS_PATH = `${ROOT_PATH}/manualAdjustments`;
 
 const TIER_GROUPS = [
   { name: "0티어", subs: ["GOD", "상", "중", "하"] },
@@ -49,6 +50,7 @@ let isAdmin = false;
 let players = [];
 let monthlyMatches = {};
 let monthlyStats = {};
+let manualAdjustments = {};
 let archivesByPlayer = {};
 let cardSelections = loadCardSelections();
 let selectedMonth = getCurrentMonthKey();
@@ -136,6 +138,15 @@ onValue(
   }
 );
 
+onValue(
+  ref(db, MANUAL_ADJUSTMENTS_PATH),
+  (snapshot) => {
+    manualAdjustments = snapshot.val() || {};
+    renderMonthOptions();
+    renderAll();
+  }
+);
+
 renderMonthOptions();
 renderAll();
 
@@ -165,9 +176,14 @@ function convertPlayers(rawPlayers) {
 }
 
 function renderMonthOptions() {
+  const adjustmentMonths = Object.values(manualAdjustments || {}).flatMap((playerAdjustments) => {
+    return Object.values(playerAdjustments || {}).map((adjustment) => adjustment.month).filter(Boolean);
+  });
+
   const months = new Set([
     ...Object.keys(monthlyMatches || {}),
-    ...Object.keys(monthlyStats || {})
+    ...Object.keys(monthlyStats || {}),
+    ...adjustmentMonths
   ]);
   months.add(selectedMonth);
   months.add(getCurrentMonthKey());
@@ -209,9 +225,17 @@ function renderCard(cardEl, cardIndex) {
   }
 
   const archiveRecords = getPlayerArchiveRecords(player.id);
-  const totalStats = calculateStats(archiveRecords);
+  const adjustmentRecords = getPlayerManualAdjustments(player.id);
+  const totalStats = mergeStats(
+    calculateStats(archiveRecords),
+    calculateAdjustmentStats(adjustmentRecords)
+  );
   const monthlyRecords = archiveRecords.filter((record) => record.month === selectedMonth);
-  const monthlyStats = calculateStats(monthlyRecords);
+  const monthlyAdjustmentRecords = adjustmentRecords.filter((record) => record.month === selectedMonth);
+  const monthlyStats = mergeStats(
+    calculateStats(monthlyRecords),
+    calculateAdjustmentStats(monthlyAdjustmentRecords)
+  );
   const monthTotalMatches = getTotalMatchesForMonth(selectedMonth);
   const participation = monthTotalMatches
     ? (monthlyStats.matches / monthTotalMatches) * 100
@@ -369,6 +393,47 @@ function getPlayerArchiveRecords(playerId) {
     result: record.result || "",
     createdAt: Number(record.createdAt || 0)
   }));
+}
+
+function getPlayerManualAdjustments(playerId) {
+  const adjustments = manualAdjustments[playerId] || {};
+  return Object.entries(adjustments).map(([adjustmentId, adjustment]) => {
+    const wins = Math.max(0, Number(adjustment.wins || 0));
+    const losses = Math.max(0, Number(adjustment.losses || 0));
+    const explicitMatches = Number(adjustment.matches || 0);
+    const matches = explicitMatches > 0 ? explicitMatches : wins + losses;
+
+    return {
+      adjustmentId,
+      month: adjustment.month || "",
+      matches,
+      wins,
+      losses,
+      note: adjustment.note || "",
+      createdAt: Number(adjustment.createdAt || 0)
+    };
+  });
+}
+
+function calculateAdjustmentStats(adjustments) {
+  const wins = adjustments.reduce((sum, adjustment) => sum + Number(adjustment.wins || 0), 0);
+  const losses = adjustments.reduce((sum, adjustment) => sum + Number(adjustment.losses || 0), 0);
+  const matches = adjustments.reduce((sum, adjustment) => {
+    const explicitMatches = Number(adjustment.matches || 0);
+    if (explicitMatches > 0) return sum + explicitMatches;
+    return sum + Number(adjustment.wins || 0) + Number(adjustment.losses || 0);
+  }, 0);
+  const safeMatches = Math.max(matches, wins + losses);
+  const rate = safeMatches ? (wins / safeMatches) * 100 : 0;
+  return { matches: safeMatches, wins, losses, rate };
+}
+
+function mergeStats(baseStats, adjustmentStats) {
+  const matches = Number(baseStats.matches || 0) + Number(adjustmentStats.matches || 0);
+  const wins = Number(baseStats.wins || 0) + Number(adjustmentStats.wins || 0);
+  const losses = Number(baseStats.losses || 0) + Number(adjustmentStats.losses || 0);
+  const rate = matches ? (wins / matches) * 100 : 0;
+  return { matches, wins, losses, rate };
 }
 
 function calculateStats(records) {

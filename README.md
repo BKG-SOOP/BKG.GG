@@ -1,19 +1,36 @@
-# BKG.GG Firebase 연동 사이트 v2
+# BKG.GG Firebase v3
 
-## 반영 사항
-- 기존 `bkgSoopRecordBoard/players`에서 멤버 데이터 읽기
+BKG-SOOP 전적표와 같은 Firebase 프로젝트를 사용하는 BKG.GG 카드 비교 사이트입니다.
+
+## v3 반영 내용
+
+- 기존 `players` 데이터 실시간 연동
 - `memberArchive` 기준 누적 전적 계산
-- 선택 월 기준 월별 전적 계산
-- 월별 참여율 계산
-  - `monthlyStats/{month}/initialTotalMatches` + `monthlyMatches/{month}` 개수 기준
+- `memberArchive` 기준 월별 전적 계산
+- `monthlyMatches + monthlyStats.initialTotalMatches` 기준 월별 전체 진행 판 수 계산
+- 월별 참여율 표시
 - 최근 5전 표시
 - 티어 색상 반영
-- 관리자 로그인 후 멤버 정보 수정 가능
+- BKG 기본 배지 표시
+- 관리자 로그인 후 멤버 정보 수정
+- 신규: `manualAdjustments` 보정값 합산
 
-## 기존 전적 즉시 연동 방법
-기존 BKG-SOOP 전적표 수정본 v2에서 관리자 로그인 후 `BKG.GG 초기 연동`을 실행하세요.
-그러면 현재 전적표에 남아 있는 `records`가 BKG.GG의 `memberArchive`로 복사됩니다.
+## manualAdjustments 계산 방식
 
-## 취소 동기화
-앞으로 전적표에서 `최근 일괄 전적 취소` 기능을 사용하면 BKG.GG archive에서도 함께 제거됩니다.
+전적표 v3의 `BKG.GG 누적 보정`에서 추가한 값은 다음 경로에 저장됩니다.
 
+```txt
+bkgSoopRecordBoard/manualAdjustments/{playerId}/{adjustmentId}
+```
+
+BKG.GG는 이 보정값을 다음 계산에 포함합니다.
+
+- 누적 전적
+- 월별 전적
+- 월별 참여율의 개인 참여 판 수
+
+단, 최근 5전은 실제 경기 순서가 필요한 항목이므로 `memberArchive`만 기준으로 계산하고, 수동 보정값은 포함하지 않습니다.
+
+## 적용 방법
+
+압축 해제 후 `index.html`, `style.css`, `app.js`를 새 BKG.GG 배포 위치에 업로드하면 됩니다.
