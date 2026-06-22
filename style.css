@@ -656,3 +656,117 @@ button { cursor: pointer; }
 }
   .form-actions { flex-direction: column; }
 }
+
+
+/* v5.2: BKG-SOOP dashboard style buttons - final override */
+button.admin-btn,
+button.refresh-btn,
+button.edit-member-btn,
+button.submit-btn,
+button.cancel-btn,
+button.close-btn {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  font-family:
+    Pretendard,
+    "Apple SD Gothic Neo",
+    "Noto Sans KR",
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif !important;
+  font-weight: 1000 !important;
+  letter-spacing: -0.03em !important;
+  cursor: pointer !important;
+}
+
+.topbar button.admin-btn,
+.filterbar button.refresh-btn {
+  min-height: 48px !important;
+  padding: 0 22px !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(96, 116, 172, 0.62) !important;
+  background:
+    linear-gradient(180deg, rgba(30, 41, 79, 0.96), rgba(20, 30, 58, 0.98)) !important;
+  color: #f8fafc !important;
+  font-size: 15px !important;
+  line-height: 1 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 10px 24px rgba(0, 0, 0, 0.22) !important;
+}
+
+.topbar button.admin-btn:hover,
+.filterbar button.refresh-btn:hover {
+  transform: translateY(-1px) !important;
+  border-color: rgba(129, 151, 218, 0.92) !important;
+  background:
+    linear-gradient(180deg, rgba(42, 56, 106, 0.98), rgba(24, 35, 68, 0.98)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.11),
+    0 14px 30px rgba(0, 0, 0, 0.28) !important;
+}
+
+.filterbar button.refresh-btn {
+  min-width: 104px !important;
+}
+
+.profile-summary button.edit-member-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 30px !important;
+  padding: 0 12px !important;
+  margin: 0 0 0 8px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(96, 116, 172, 0.5) !important;
+  background: rgba(17, 24, 39, 0.86) !important;
+  color: #dbeafe !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 5px 12px rgba(0, 0, 0, 0.18) !important;
+  vertical-align: middle !important;
+}
+
+.profile-summary button.edit-member-btn:hover {
+  transform: translateY(-1px) !important;
+  border-color: rgba(191, 219, 254, 0.86) !important;
+  background: rgba(30, 41, 79, 0.96) !important;
+  color: #ffffff !important;
+}
+
+.form button.submit-btn,
+.form button.cancel-btn {
+  min-height: 42px !important;
+  padding: 0 18px !important;
+  border-radius: 14px !important;
+  font-size: 14px !important;
+  line-height: 1 !important;
+}
+
+.form button.submit-btn {
+  border: 1px solid rgba(129, 151, 218, 0.72) !important;
+  background:
+    linear-gradient(180deg, rgba(30, 41, 79, 0.96), rgba(20, 30, 58, 0.98)) !important;
+  color: #f8fafc !important;
+}
+
+.form button.cancel-btn {
+  border: 1px solid rgba(71, 85, 105, 0.72) !important;
+  background: rgba(15, 23, 42, 0.88) !important;
+  color: #cbd5e1 !important;
+}
+
+button.close-btn {
+  width: 36px !important;
+  height: 36px !important;
+  border-radius: 999px !important;
+  border: 1px solid rgba(96, 116, 172, 0.58) !important;
+  background: rgba(17, 24, 39, 0.92) !important;
+  color: #f8fafc !important;
+  display: grid !important;
+  place-items: center !important;
+}
