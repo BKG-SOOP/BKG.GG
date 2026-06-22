@@ -31,6 +31,7 @@ const ROOT_PATH = "bkgSoopRecordBoard";
 const PLAYERS_PATH = `${ROOT_PATH}/players`;
 const MEMBER_ARCHIVE_PATH = `${ROOT_PATH}/memberArchive`;
 const MONTHLY_MATCHES_PATH = `${ROOT_PATH}/monthlyMatches`;
+const MONTHLY_STATS_PATH = `${ROOT_PATH}/monthlyStats`;
 
 const TIER_GROUPS = [
   { name: "0티어", subs: ["GOD", "상", "중", "하"] },
@@ -47,6 +48,7 @@ let currentUser = null;
 let isAdmin = false;
 let players = [];
 let monthlyMatches = {};
+let monthlyStats = {};
 let archivesByPlayer = {};
 let cardSelections = loadCardSelections();
 let selectedMonth = getCurrentMonthKey();
@@ -125,6 +127,15 @@ onValue(
   }
 );
 
+onValue(
+  ref(db, MONTHLY_STATS_PATH),
+  (snapshot) => {
+    monthlyStats = snapshot.val() || {};
+    renderMonthOptions();
+    renderAll();
+  }
+);
+
 renderMonthOptions();
 renderAll();
 
@@ -154,7 +165,10 @@ function convertPlayers(rawPlayers) {
 }
 
 function renderMonthOptions() {
-  const months = new Set(Object.keys(monthlyMatches || {}));
+  const months = new Set([
+    ...Object.keys(monthlyMatches || {}),
+    ...Object.keys(monthlyStats || {})
+  ]);
   months.add(selectedMonth);
   months.add(getCurrentMonthKey());
 
@@ -366,7 +380,9 @@ function calculateStats(records) {
 }
 
 function getTotalMatchesForMonth(month) {
-  return Object.keys(monthlyMatches[month] || {}).length;
+  const liveMonthlyCount = Object.keys(monthlyMatches[month] || {}).length;
+  const initialCount = Number(monthlyStats[month]?.initialTotalMatches || 0);
+  return initialCount + liveMonthlyCount;
 }
 
 function getRecentFive(records) {
