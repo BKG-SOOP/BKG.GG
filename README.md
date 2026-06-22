@@ -1,4 +1,4 @@
-# BKG.GG Firebase v3
+# BKG.GG Firebase v4
 
 BKG-SOOP 전적표와 같은 Firebase 프로젝트를 사용하는 BKG.GG 카드 비교 사이트입니다.
 
@@ -39,3 +39,11 @@ BKG.GG는 이 보정값을 다음 계산에 포함합니다.
 추가 수정사항
 - 최근 5전 배지를 5칸 고정 1줄 레이아웃으로 변경
 - 전체 컨테이너 최대 너비를 소폭 확대
+
+
+v4 반영 내용
+- 멤버 수정창에 프로필 이미지 URL/상대경로 입력칸 추가
+- Firebase players/{playerId}/profileImageUrl 저장
+- 카드 프로필 영역에서 profileImageUrl이 있으면 이미지 표시
+- 이미지가 없거나 로딩 실패하면 기존 BKG 배지로 자동 대체
+- GitHub Pages 같은 저장소 이미지 사용 시 ./images/profiles/파일명.webp 형태 사용 가능

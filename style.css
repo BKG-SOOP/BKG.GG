@@ -220,6 +220,13 @@ button { cursor: pointer; }
   align-items: center;
   gap: 14px;
 }
+.profile-visual {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 auto;
+  position: relative;
+}
+
 .bkg-avatar {
   width: 64px;
   height: 64px;
@@ -233,6 +240,19 @@ button { cursor: pointer; }
   letter-spacing: -0.05em;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
 }
+
+.profile-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: block;
+  object-fit: cover;
+  background: #0b1120;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.2),
+    0 10px 28px rgba(0, 0, 0, 0.28);
+}
+
 .member-info { min-width: 0; flex: 1; }
 .member-name {
   margin: 0 0 8px;
@@ -351,7 +371,7 @@ button { cursor: pointer; }
   font-size: 13px;
   font-weight: 900;
 }
-.recent-list {
+\.recent-list {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 7px;
@@ -441,6 +461,13 @@ button { cursor: pointer; }
   font-size: 13px;
   font-weight: 900;
 }
+.form-hint {
+  display: block;
+  color: var(--muted-2);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
 .form input, .form select {
   width: 100%;
   height: 44px;

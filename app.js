@@ -164,6 +164,7 @@ function convertPlayers(rawPlayers) {
         shortName: player.shortName || "",
         tier,
         subTier,
+        profileImageUrl: player.profileImageUrl || player.profileImage || "",
         createdAt: player.createdAt || 0
       };
     })
@@ -249,7 +250,7 @@ function renderCard(cardEl, cardIndex) {
     ${createSearchBlock(cardIndex, player.name)}
 
     <section class="profile-summary">
-      <div class="bkg-avatar" style="background:${hashColor(player.id)}">BKG</div>
+      ${createProfileVisual(player)}
       <div class="member-info">
         <h2 class="member-name">${escapeHtml(player.name)}</h2>
         <span class="tier-badge ${tierClass}">${escapeHtml(tierLabel)}</span>
@@ -291,6 +292,29 @@ function renderCard(cardEl, cardIndex) {
   cardEl.querySelector("[data-edit-player]")?.addEventListener("click", () => {
     openEditPlayerModal(player.id);
   });
+}
+
+
+function createProfileVisual(player) {
+  const imageUrl = String(player.profileImageUrl || "").trim();
+  const avatar = `<div class="bkg-avatar ${imageUrl ? "hidden" : ""}" style="background:${hashColor(player.id)}">BKG</div>`;
+
+  if (!imageUrl) {
+    return avatar;
+  }
+
+  return `
+    <div class="profile-visual">
+      <img
+        class="profile-image"
+        src="${escapeAttr(imageUrl)}"
+        alt="${escapeAttr(player.name)} 프로필"
+        loading="lazy"
+        onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');"
+      />
+      ${avatar}
+    </div>
+  `;
 }
 
 function createSearchBlock(cardIndex, value) {
@@ -585,6 +609,12 @@ function openEditPlayerModal(playerId) {
           <select id="editPlayerSubTier"></select>
         </label>
 
+        <label>
+          프로필 이미지 URL 또는 상대경로
+          <input type="text" id="editProfileImageUrl" value="${escapeAttr(player.profileImageUrl || "")}" placeholder="./images/profiles/파일명.webp" autocomplete="off" />
+          <span class="form-hint">이미지 없으면 빈칸으로 두면 BKG 배지가 표시됩니다.</span>
+        </label>
+
         <div class="form-actions">
           <button type="submit" class="submit-btn">저장</button>
           <button type="button" class="cancel-btn" data-close>취소</button>
@@ -608,6 +638,12 @@ function openEditPlayerModal(playerId) {
     const shortName = document.getElementById("editPlayerShortName").value.trim();
     const tier = tierSelect.value;
     const subTier = subTierSelect.value;
+    const profileImageUrl = document.getElementById("editProfileImageUrl").value.trim();
+
+    if (profileImageUrl && !isValidProfileImagePath(profileImageUrl)) {
+      alert("프로필 이미지 URL은 http://, https://, ./, ../, /, images/ 중 하나로 시작해야 합니다.");
+      return;
+    }
 
     if (!name) {
       alert("풀네임을 입력해 주세요.");
@@ -643,6 +679,7 @@ function openEditPlayerModal(playerId) {
         [`${PLAYERS_PATH}/${playerId}/shortName`]: shortName,
         [`${PLAYERS_PATH}/${playerId}/tier`]: tier,
         [`${PLAYERS_PATH}/${playerId}/subTier`]: subTier,
+        [`${PLAYERS_PATH}/${playerId}/profileImageUrl`]: profileImageUrl,
         [`${ROOT_PATH}/meta`]: createMeta()
       });
       closeModal();
@@ -669,6 +706,11 @@ function bindCloseButtons() {
   document.querySelectorAll("[data-close]").forEach((button) => {
     button.addEventListener("click", closeModal);
   });
+}
+
+
+function isValidProfileImagePath(value) {
+  return /^(https?:\/\/|\.\/|\.\.\/|\/|images\/)/i.test(value);
 }
 
 function fillSubTierOptions(tierName, selectEl, selectedSubTier = "") {
