@@ -271,7 +271,7 @@ function renderCard(cardEl, cardIndex) {
         <p class="rate-line">승률 <strong>${formatRate(monthlyStats.rate)}%</strong></p>
       </div>
 
-      <div class="stat-box">
+      <div class="stat-box is-compact">
         <h3 class="stat-title">${monthLabel} 참여율</h3>
         <p class="participation-count">${monthlyStats.matches} / ${monthTotalMatches}<span>판</span></p>
         <div class="progress-track" aria-label="참여율 ${participation.toFixed(1)}%">
@@ -280,7 +280,7 @@ function renderCard(cardEl, cardIndex) {
         <div class="progress-label">${participation.toFixed(1)}%</div>
       </div>
 
-      <div class="stat-box">
+      <div class="stat-box is-compact">
         <h3 class="stat-title">최근 5전</h3>
         <div class="recent-list">
           ${createRecentBadges(recentFive)}

@@ -47,7 +47,7 @@ button, select, input { font: inherit; }
 button { cursor: pointer; }
 
 .app-shell {
-  width: min(1620px, calc(100% - 48px));
+  width: min(1720px, calc(100% - 48px));
   margin: 0 auto;
   padding: 28px 0 44px;
 }
@@ -73,13 +73,11 @@ button { cursor: pointer; }
 }
 
 .admin-btn, .refresh-btn, .submit-btn, .cancel-btn, .edit-member-btn {
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  background: rgba(17, 24, 39, 0.9);
-  color: var(--text);
-  padding: 10px 16px;
-  font-weight: 800;
-  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  margin-top: 0;
+  margin-left: 6px;
+  padding: 6px 9px;
+  font-size: 11px;
+  vertical-align: middle;
 }
 .admin-btn:hover, .refresh-btn:hover, .submit-btn:hover, .cancel-btn:hover, .edit-member-btn:hover {
   transform: translateY(-1px);
@@ -132,17 +130,17 @@ button { cursor: pointer; }
 .cards-layout {
   margin-top: 22px;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(3, minmax(455px, 1fr));
+  gap: 22px;
   align-items: start;
 }
 .member-card {
-  min-height: 560px;
+  min-height: 590px;
   padding: 18px;
   border: 1px solid var(--line);
   border-radius: var(--radius-xl);
   background:
-    linear-gradient(180deg, rgba(30, 41, 59, 0.74), rgba(15, 23, 42, 0.92)),
+    linear-gradient(180deg, rgba(30, 41, 59, 0.78), rgba(15, 23, 42, 0.94)),
     var(--panel);
   box-shadow: var(--shadow-card);
 }
@@ -212,54 +210,61 @@ button { cursor: pointer; }
 
 .profile-summary {
   margin-top: 16px;
-  padding: 16px;
+  padding: 18px 16px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: rgba(2, 6, 23, 0.32);
-  display: flex;
+  background:
+    radial-gradient(circle at top, rgba(148, 163, 184, 0.12), transparent 58%),
+    rgba(2, 6, 23, 0.34);
+  display: grid;
+  grid-template-columns: 148px minmax(0, 1fr);
   align-items: center;
-  gap: 14px;
+  gap: 18px;
+  min-height: 180px;
 }
 .profile-visual {
-  width: 64px;
-  height: 64px;
+  width: 148px;
+  height: 148px;
   flex: 0 0 auto;
   position: relative;
 }
 
 .bkg-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
+  width: 148px;
+  height: 148px;
+  border-radius: 26px;
   display: grid;
   place-items: center;
   flex: 0 0 auto;
   color: #fff;
-  font-size: 17px;
+  font-size: 34px;
   font-weight: 1000;
-  letter-spacing: -0.05em;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+  letter-spacing: -0.06em;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.24),
+    0 16px 36px rgba(0, 0, 0, 0.32);
 }
 
 .profile-image {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
+  width: 148px;
+  height: 148px;
+  border-radius: 26px;
   display: block;
   object-fit: cover;
+  object-position: center;
   background: #0b1120;
   box-shadow:
     inset 0 0 0 1px rgba(255, 255, 255, 0.2),
-    0 10px 28px rgba(0, 0, 0, 0.28);
+    0 16px 36px rgba(0, 0, 0, 0.32);
 }
 
 .member-info { min-width: 0; flex: 1; }
 .member-name {
-  margin: 0 0 8px;
-  font-size: 24px;
-  line-height: 1;
+  margin: 0 0 12px;
+  font-size: 34px;
+  line-height: 1.04;
   font-weight: 1000;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.055em;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -279,29 +284,31 @@ button { cursor: pointer; }
 .tier-2 { background: var(--tier-2); }
 .tier-3 { background: var(--tier-3); }
 .edit-member-btn {
-  margin-top: 10px;
-  padding: 7px 10px;
-  font-size: 12px;
+  margin-top: 0;
+  margin-left: 6px;
+  padding: 6px 9px;
+  font-size: 11px;
+  vertical-align: middle;
 }
 .hidden { display: none !important; }
 
 .stats-grid {
-  margin-top: 16px;
+  margin-top: 14px;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
 }
 .stat-box {
-  min-height: 158px;
+  min-height: 116px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: rgba(17, 24, 39, 0.66);
-  padding: 13px;
+  background: rgba(17, 24, 39, 0.62);
+  padding: 11px;
 }
 .stat-title {
-  margin: 0 0 11px;
+  margin: 0 0 8px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 1000;
 }
 .triple {
@@ -314,33 +321,37 @@ button { cursor: pointer; }
 }
 .triple-cell {
   min-width: 0;
-  padding: 10px 4px 8px;
+  padding: 8px 3px 7px;
   text-align: center;
 }
-.triple-cell + .triple-cell { border-left: 1px solid var(--line-strong); }
+.triple-cell + .triple-cell {
+  min-width: 0;
+  padding: 8px 3px 7px;
+  text-align: center;
+}
 .triple-num {
   display: block;
-  font-size: 20px;
-  line-height: 1.05;
+  font-size: 19px;
+  line-height: 1;
   font-weight: 1000;
   letter-spacing: -0.05em;
 }
 .triple-label {
   display: block;
-  margin-top: 5px;
+  margin-top: 4px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 900;
 }
 .rate-line {
-  margin: 11px 0 0;
+  margin: 8px 0 0;
   color: var(--text);
   font-weight: 900;
-  font-size: 14px;
+  font-size: 13px;
 }
 .rate-line strong { color: #facc15; }
 .participation-count {
-  margin: 2px 0 10px;
+  margin: 0 0 8px;
   font-size: 20px;
   font-weight: 1000;
   letter-spacing: -0.04em;
@@ -352,7 +363,7 @@ button { cursor: pointer; }
 }
 .progress-track {
   width: 100%;
-  height: 16px;
+  height: 14px;
   border-radius: 999px;
   background: var(--progress-bg);
   overflow: hidden;
@@ -366,27 +377,27 @@ button { cursor: pointer; }
   transition: width 0.25s ease;
 }
 .progress-label {
-  margin-top: 8px;
+  margin-top: 6px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 900;
 }
-\.recent-list {
+.recent-list {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 7px;
-  margin-top: 16px;
+  gap: 6px;
+  margin-top: 12px;
 }
 .result-badge {
   width: 100%;
   min-width: 0;
-  height: 34px;
-  border-radius: 10px;
+  height: 30px;
+  border-radius: 9px;
   display: grid;
   place-items: center;
   color: #fff;
   font-weight: 1000;
-  font-size: 14px;
+  font-size: 13px;
 }
 .result-win { background: var(--win); }
 .result-lose { background: var(--lose); }
@@ -501,9 +512,69 @@ button { cursor: pointer; }
   font-weight: 800;
 }
 
+
+
+/* v5: image-focused card layout */
+.stat-box.is-compact {
+  min-height: 108px;
+}
+
+.profile-summary .tier-badge {
+  min-height: 30px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+/* Keep three prominent cards on desktop, but stack cleanly on narrower screens. */
+@media (max-width: 1500px) {
+  .cards-layout {
+    grid-template-columns: repeat(3, minmax(390px, 1fr));
+  }
+
+  .profile-summary {
+    grid-template-columns: 128px minmax(0, 1fr);
+    min-height: 160px;
+  }
+
+  .profile-visual,
+  .profile-image,
+  .bkg-avatar {
+    width: 128px;
+    height: 128px;
+  }
+
+  .bkg-avatar {
+    font-size: 30px;
+    border-radius: 23px;
+  }
+
+  .profile-image {
+    border-radius: 23px;
+  }
+
+  .member-name {
+    font-size: 30px;
+  }
+}
+
 @media (max-width: 1180px) {
-  .cards-layout { grid-template-columns: 1fr; }
-  .member-card { min-height: auto; }
+  .cards-layout {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(455px, 1fr));
+  gap: 22px;
+  align-items: start;
+}
+  .member-card {
+  min-height: 590px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background:
+    linear-gradient(180deg, rgba(30, 41, 59, 0.78), rgba(15, 23, 42, 0.94)),
+    var(--panel);
+  box-shadow: var(--shadow-card);
+}
 }
 @media (max-width: 640px) {
   .app-shell {
@@ -522,6 +593,11 @@ button { cursor: pointer; }
   .month-control { align-items: stretch; flex-direction: column; }
   .filter-actions { align-items: stretch; flex-direction: column; }
   .month-control select, .refresh-btn, .admin-btn { width: 100%; }
-  .stats-grid { grid-template-columns: 1fr; }
+  .stats-grid {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
   .form-actions { flex-direction: column; }
 }
