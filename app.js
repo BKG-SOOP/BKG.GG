@@ -35,7 +35,7 @@ const MONTHLY_STATS_PATH = `${ROOT_PATH}/monthlyStats`;
 const MANUAL_ADJUSTMENTS_PATH = `${ROOT_PATH}/manualAdjustments`;
 
 const TIER_GROUPS = [
-  { name: "0티어", subs: ["GOD", "상", "중", "하"] },
+  { name: "0티어", subs: ["GOD", "상", "중", "하", "최하"] },
   { name: "1티어", subs: ["최상", "상", "중", "하"] },
   { name: "2티어", subs: ["최상", "상", "중", "하"] },
   { name: "3티어", subs: ["최상", "상", "중", "하"] }
